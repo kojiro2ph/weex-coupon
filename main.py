@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+import requests
 import json
 import os
 
@@ -16,8 +17,53 @@ def get_sample_data():
     SHOP = os.getenv("SHOPIFY_SHOP")
     TOKEN = os.getenv("SHOPIFY_TOKEN")
 
+    url = f"https://weex-service.myshopify.com/admin/api/2025-04/graphql.json"
+
+    query = """
+    {
+    discountNodes(first: 20) {
+        edges {
+        node {
+            id
+            discount {
+            ... on DiscountCodeBasic {
+                title
+                status
+                summary
+                startsAt
+                endsAt
+
+                codes(first: 10) {
+                nodes {
+                    code
+                }
+                }
+            }
+            }
+        }
+        }
+    }
+    }
+    """
+
+    headers = {
+        "Content-Type": "application/json",
+        "X-Shopify-Access-Token": TOKEN
+    }
+
+    response = requests.post(
+        url,
+        headers=headers,
+        json={"query": query}
+    )
+
+    data = response.json()
+
+    x = json.dumps(data, indent=2, ensure_ascii=False)
+
     return {
         "message": "This is a sample API endpoint. Replace this with your actual data fetching logic. [" + TOKEN + " @ " + SHOP + "]",
+        "data": x
     }
 
 @app.get("/api/items/{item_id}")
