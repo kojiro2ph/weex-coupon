@@ -17,15 +17,15 @@ TOKEN = os.getenv("SHOPIFY_TOKEN")
 @app.get("/api/test")
 def test_api():
     print("Testing API endpoint...")
-    url = f"https://{SHOP}/admin/oauth/access_token"
 
-    payload = {
-        "client_id": CLIENT_ID,
-        "client_secret": TOKEN,
-        "grant_type": "client_credentials"
-    }
+    auth_url = (
+        f"https://{SHOP}/admin/oauth/authorize"
+        f"?client_id={CLIENT_ID}"
+        f"&scope=read_discounts"
+        f"&redirect_uri=https://weex-coupon.vercel.app/auth/callback"
+    )
 
-    r = requests.post(url, json=payload)
+    r = requests.get(auth_url)
 
     return {
         "status_code": r.status_code,
