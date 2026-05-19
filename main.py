@@ -21,8 +21,13 @@ def test_api():
 
     auth_url = f"https://{SHOP}/admin/oauth/authorize?client_id={CLIENT_ID}&scope=read_discounts&redirect_uri=https://weex-coupon.vercel.app/auth/callback"
 
-    return RedirectResponse(auth_url)
+    x = RedirectResponse(auth_url)
 
+    return { 
+        "message": "This is a test API endpoint. Replace this with your actual data fetching logic. [" + TOKEN + " @ " + SHOP + "]",
+        "auth_url": auth_url,
+        "redirect_response": x
+    }
 @app.get("/api/data")
 def get_sample_data():
 
