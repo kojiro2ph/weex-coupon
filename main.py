@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 import requests
 import json
+import os
 
 app = FastAPI(
     title="Vercel + FastAPI",
@@ -12,8 +13,8 @@ app = FastAPI(
 
 @app.get("/api/data")
 def get_sample_data():
-    SHOP = "weex-service.myshopify.com"
-    TOKEN = "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"
+    SHOP = os.getenv("SHOPIFY_SHOP")
+    TOKEN = os.getenv("SHOPIFY_TOKEN")
 
     url = f"https://weex-service.myshopify.com/admin/api/2025-04/graphql.json"
 
