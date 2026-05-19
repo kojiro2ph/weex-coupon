@@ -70,7 +70,7 @@ def get_sample_data():
 
     headers = {
         "Content-Type": "application/json",
-        "X-Shopify-Access-Token": TOKEN
+        "X-Shopify-Access-Token": ACCESS_TOKEN
     }
 
     response = requests.post(
