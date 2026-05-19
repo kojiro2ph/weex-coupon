@@ -11,16 +11,21 @@ app = FastAPI(
 )
 
 SHOP = os.getenv("SHOPIFY_SHOP")
+CLIENT_ID = os.getenv("SHOPIFY_CLIENT_ID")
 TOKEN = os.getenv("SHOPIFY_TOKEN")
 
 @app.get("/api/test")
 def test_api():
-    r = requests.get(
-        "https://weex-service.myshopify.com/admin/api/2026-04/shop.json",
-        headers={
-            "X-Shopify-Access-Token": TOKEN
-        }
-    )
+    url = f"https://{SHOP}/admin/oauth/access_token"
+
+    payload = {
+        "client_id": CLIENT_ID,
+        "client_secret": TOKEN,
+    }
+
+    r = requests.post(url, json=payload)
+
+    print(r.json())
     return {
         "status_code": r.status_code,
         "response": r.text
