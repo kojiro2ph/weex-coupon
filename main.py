@@ -22,7 +22,7 @@ def test_api():
     auth_url = f"https://{SHOP}/admin/oauth/access_token"
 
     json = {
-        "grant_type": "client_credentials",
+        "code": "2e6a7dccc74b11b86db369751f16ef3e",
         "client_id": CLIENT_ID,
         "client_secret": TOKEN,
     }
