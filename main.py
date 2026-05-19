@@ -32,7 +32,7 @@ def test_api():
     return { 
         "message": "Testing API endpoint. Check the console for details.",
         "auth_url": auth_url,
-        "redirect_response": x
+        "redirect_response": x.text
     }
 
 @app.get("/api/data")
