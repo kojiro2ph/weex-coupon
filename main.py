@@ -19,15 +19,22 @@ TOKEN = os.getenv("SHOPIFY_TOKEN")
 def test_api():
     print("Testing API endpoint...")
 
-    auth_url = f"https://{SHOP}/admin/oauth/authorize?client_id={CLIENT_ID}&scope=read_discounts&redirect_uri=https://weex-coupon.vercel.app/auth/callback"
+    auth_url = f"https://${SHOP}.myshopify.com/admin/oauth/access_token"
 
-    x = RedirectResponse(auth_url)
+    json = {
+        "grant_type": "client_credentials",
+        "client_id": CLIENT_ID,
+        "client_secret": TOKEN,
+    }
+
+    x = requests.post(auth_url, json=json)
 
     return { 
-        "message": "This is a test API endpoint. Replace this with your actual data fetching logic. [" + TOKEN + " @ " + SHOP + "]",
+        "message": "Testing API endpoint. Check the console for details.",
         "auth_url": auth_url,
         "redirect_response": x
     }
+
 @app.get("/api/data")
 def get_sample_data():
 
