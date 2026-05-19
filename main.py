@@ -21,6 +21,7 @@ def test_api():
     payload = {
         "client_id": CLIENT_ID,
         "client_secret": TOKEN,
+        "grant_type": "client_credentials"
     }
 
     r = requests.post(url, json=payload)
