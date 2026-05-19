@@ -24,7 +24,7 @@ def test_api():
         f"&scope=read_discounts"
         f"&redirect_uri=https://weex-coupon.vercel.app/auth/callback"
     )
-    print]("Making request to Shopify auth URL:", auth_url)
+    print("Making request to Shopify auth URL:", auth_url)
     r = requests.get(auth_url)
 
     return {
