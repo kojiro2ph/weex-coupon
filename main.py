@@ -18,14 +18,7 @@ TOKEN = os.getenv("SHOPIFY_TOKEN")
 def test_api():
     print("Testing API endpoint...")
 
-    auth_url = (
-        f"https://{SHOP}/admin/oauth/authorize"
-        f"?client_id={CLIENT_ID}"
-        f"&scope=read_discounts"
-        f"&redirect_uri=https://weex-coupon.vercel.app/auth/callback"
-    )
-    print("Making request to Shopify auth URL:", auth_url)
-    r = requests.get(auth_url)
+    r = requests.get(f"https://{SHOP}/admin/oauth/authorize?client_id={CLIENT_ID}&scope=read_discounts&redirect_uri=https://weex-coupon.vercel.app/auth/callback")
 
     return {
         "status_code": r.status_code,
