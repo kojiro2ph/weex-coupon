@@ -16,6 +16,7 @@ TOKEN = os.getenv("SHOPIFY_TOKEN")
 
 @app.get("/api/test")
 def test_api():
+    print("Testing API endpoint...")
     url = f"https://{SHOP}/admin/oauth/access_token"
 
     payload = {
@@ -26,7 +27,6 @@ def test_api():
 
     r = requests.post(url, json=payload)
 
-    print(r.json())
     return {
         "status_code": r.status_code,
         "response": r.text
