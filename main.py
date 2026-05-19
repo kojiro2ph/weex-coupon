@@ -19,7 +19,7 @@ TOKEN = os.getenv("SHOPIFY_TOKEN")
 def test_api():
     print("Testing API endpoint...")
 
-    auth_url = f"https://${SHOP}.myshopify.com/admin/oauth/access_token"
+    auth_url = f"https://{SHOP}/admin/oauth/access_token"
 
     json = {
         "grant_type": "client_credentials",
