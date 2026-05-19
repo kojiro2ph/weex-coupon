@@ -14,6 +14,7 @@ app = FastAPI(
 SHOP = os.getenv("SHOPIFY_SHOP")
 CLIENT_ID = os.getenv("SHOPIFY_CLIENT_ID")
 TOKEN = os.getenv("SHOPIFY_TOKEN")
+ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
 @app.get("/api/test")
 def test_api():
@@ -38,7 +39,7 @@ def test_api():
 @app.get("/api/data")
 def get_sample_data():
 
-    url = f"https://weex-service.myshopify.com/admin/api/2025-04/graphql.json"
+    url = f"https://{SHOP}/admin/api/2025-04/graphql.json"
 
     query = """
     {
