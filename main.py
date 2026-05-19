@@ -15,21 +15,16 @@ TOKEN = os.getenv("SHOPIFY_TOKEN")
 
 @app.get("/api/test")
 def test_api():
-
-
-    url = f"https://{SHOP}/admin/api/2026-04/shop.json"
-
-    headers = {
-        "X-Shopify-Access-Token": TOKEN
-    }
-
-    r = requests.get(url, headers=headers)
-
+    r = requests.get(
+        "https://weex-service.myshopify.com/admin/api/2026-04/shop.json",
+        headers={
+            "X-Shopify-Access-Token": TOKEN
+        }
+    )
     return {
-        "message": r.status_code,
-        "data": r.text
+        "status_code": r.status_code,
+        "response": r.text
     }
-
 
 @app.get("/api/data")
 def get_sample_data():
