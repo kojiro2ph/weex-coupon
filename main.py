@@ -13,6 +13,7 @@ app = FastAPI(
 
 @app.get("/api/data")
 def get_sample_data():
+    /*
     SHOP = os.getenv("SHOPIFY_SHOP")
     TOKEN = os.getenv("SHOPIFY_TOKEN")
 
@@ -59,7 +60,10 @@ def get_sample_data():
     data = response.json()
 
     return json.dumps(data, indent=2, ensure_ascii=False)
-
+    */
+    return {
+        "message": "This is a sample API endpoint. Replace this with your actual data fetching logic.",
+    }
 
 @app.get("/api/items/{item_id}")
 def get_item(item_id: int):
