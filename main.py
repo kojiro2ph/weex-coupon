@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+from fastapi.responses import RedirectResponse
 import requests
 import json
 import os
@@ -18,12 +19,9 @@ TOKEN = os.getenv("SHOPIFY_TOKEN")
 def test_api():
     print("Testing API endpoint...")
 
-    r = requests.get(f"https://{SHOP}/admin/oauth/authorize?client_id={CLIENT_ID}&scope=read_discounts&redirect_uri=https://weex-coupon.vercel.app/auth/callback")
+    auth_url = f"https://{SHOP}/admin/oauth/authorize?client_id={CLIENT_ID}&scope=read_discounts&redirect_uri=https://weex-coupon.vercel.app/auth/callback"
 
-    return {
-        "status_code": r.status_code,
-        "response": r.text
-    }
+    return RedirectResponse(auth_url)
 
 @app.get("/api/data")
 def get_sample_data():
