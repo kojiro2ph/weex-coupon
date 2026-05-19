@@ -10,12 +10,29 @@ app = FastAPI(
     version="1.0.0",
 )
 
+SHOP = os.getenv("SHOPIFY_SHOP")
+TOKEN = os.getenv("SHOPIFY_TOKEN")
+
+@app.get("/api/test")
+def test_api():
+
+
+    url = f"https://{SHOP}/admin/api/2026-04/shop.json"
+
+    headers = {
+        "X-Shopify-Access-Token": TOKEN
+    }
+
+    r = requests.get(url, headers=headers)
+
+    return {
+        "message": r.status_code,
+        "data": r.text
+    }
+
 
 @app.get("/api/data")
 def get_sample_data():
-
-    SHOP = os.getenv("SHOPIFY_SHOP")
-    TOKEN = os.getenv("SHOPIFY_TOKEN")
 
     url = f"https://weex-service.myshopify.com/admin/api/2025-04/graphql.json"
 
