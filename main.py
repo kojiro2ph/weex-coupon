@@ -173,9 +173,44 @@ def get_sample_data():
         if "all" in edge["node"]["codeDiscount"].get("tags", [])
     ]
 
+
+    # customer ---
+    customer_id = "gid://shopify/Customer/6617539969210"
+
+    matched = []
+
+    for edge in data["data"]["codeDiscountNodes"]["edges"]:
+        node = edge["node"]
+        discount = node["codeDiscount"]
+
+        context = discount.get("context", {})
+
+        if context.get("__typename") != "DiscountCustomers":
+            continue
+
+        customers = context.get("customers", [])
+
+        if any(c["id"] == customer_id for c in customers):
+            matched.append({
+                "discount_id": node["id"],
+                "title": discount["title"],
+                "status": discount["status"],
+                "codes": [
+                    x["code"]
+                    for x in discount["codes"]["nodes"]
+                ]
+            })
+
+
+
+
+
+
+
     return {
         "count": len(all_discounts),
-        "data": all_discounts
+        "data": all_discounts,
+        "mfc": matched
     }
 
 @app.get("/api/items/{item_id}")
