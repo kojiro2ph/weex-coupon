@@ -6,18 +6,18 @@ import json
 import os
 from fastapi.middleware.cors import CORSMiddleware
 
+app = FastAPI(
+    title="Vercel + FastAPI",
+    description="Vercel + FastAPI",
+    version="1.0.0",
+)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-)
-
-app = FastAPI(
-    title="Vercel + FastAPI",
-    description="Vercel + FastAPI",
-    version="1.0.0",
 )
 
 SHOP = os.getenv("SHOPIFY_SHOP")
