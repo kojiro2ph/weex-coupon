@@ -43,28 +43,53 @@ def get_sample_data():
 
     query = """
     {
-    discountNodes(first: 20) {
-        edges {
-        node {
-            id
-            discount {
-            ... on DiscountCodeBasic {
-                title
-                status
-                summary
-                startsAt
-                endsAt
-                tags
-                codes(first: 10) {
-                nodes {
-                    code
+        codeDiscountNodes(first: 50) {
+            edges {
+            node {
+                id
+                codeDiscount {
+                ... on DiscountCodeBasic {
+                    title
+                    status
+                    tags
+                    codes(first: 10) {
+                    nodes {
+                        code
+                    }
+                    }
+                    startsAt
+                    endsAt
+                }
+
+                ... on DiscountCodeBxgy {
+                    title
+                    status
+                    tags
+                    codes(first: 10) {
+                    nodes {
+                        code
+                    }
+                    }
+                    startsAt
+                    endsAt
+                }
+
+                ... on DiscountCodeFreeShipping {
+                    title
+                    status
+                    tags
+                    codes(first: 10) {
+                    nodes {
+                        code
+                    }
+                    }
+                    startsAt
+                    endsAt
                 }
                 }
             }
             }
         }
-        }
-    }
     }
     """
 
