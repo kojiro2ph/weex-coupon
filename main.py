@@ -25,14 +25,14 @@ CLIENT_ID = os.getenv("SHOPIFY_CLIENT_ID")
 TOKEN = os.getenv("SHOPIFY_TOKEN")
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
-@app.get("/api/test")
+@app.get("/api/test99")
 def test_api():
     print("Testing API endpoint...")
 
     auth_url = f"https://{SHOP}/admin/oauth/access_token"
 
     json = {
-        "code": "9a134ee44987b082f208e9348ec1774b",
+        "code": "d5e5158dfac3080e541ef7dff9d032a0",
         "client_id": CLIENT_ID,
         "client_secret": TOKEN,
     }
