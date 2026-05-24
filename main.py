@@ -39,7 +39,7 @@ def test_api():
 @app.get("/api/data")
 def get_sample_data():
 
-    url = f"https://{SHOP}/admin/api/2025-04/graphql.json"
+    url = f"https://{SHOP}/admin/api/2026-04/graphql.json"
 
     query = """
     {
