@@ -75,6 +75,16 @@ def get_sample_data():
                 codeDiscount {{
                   ... on DiscountCodeBasic {{
                     title
+                    context {{
+                    __typename
+
+                    ... on DiscountCustomers {{
+                        customers {{
+                        id
+                        email
+                        }}
+                    }}
+                    }}
                     status
                     tags
                     codes(first: 10) {{
@@ -88,6 +98,16 @@ def get_sample_data():
 
                   ... on DiscountCodeBxgy {{
                     title
+                    context {{
+                    __typename
+
+                    ... on DiscountCustomers {{
+                        customers {{
+                        id
+                        email
+                        }}
+                    }}
+                    }}
                     status
                     tags
                     codes(first: 10) {{
@@ -101,6 +121,16 @@ def get_sample_data():
 
                   ... on DiscountCodeFreeShipping {{
                     title
+                    context {{
+                    __typename
+
+                    ... on DiscountCustomers {{
+                        customers {{
+                        id
+                        email
+                        }}
+                    }}
+                    }}
                     status
                     tags
                     codes(first: 10) {{
