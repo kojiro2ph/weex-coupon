@@ -54,7 +54,7 @@ def get_sample_data():
                 summary
                 startsAt
                 endsAt
-
+                tags
                 codes(first: 10) {
                 nodes {
                     code
