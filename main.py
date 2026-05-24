@@ -50,81 +50,101 @@ def get_sample_data():
 
     url = f"https://{SHOP}/admin/api/2026-04/graphql.json"
 
-    query = """
-    {
-        codeDiscountNodes(first: 50) {
-            edges {
-            node {
-                id
-                codeDiscount {
-                ... on DiscountCodeBasic {
-                    title
-                    status
-                    tags
-                    codes(first: 10) {
-                    nodes {
-                        code
-                    }
-                    }
-                    startsAt
-                    endsAt
-                }
-
-                ... on DiscountCodeBxgy {
-                    title
-                    status
-                    tags
-                    codes(first: 10) {
-                    nodes {
-                        code
-                    }
-                    }
-                    startsAt
-                    endsAt
-                }
-
-                ... on DiscountCodeFreeShipping {
-                    title
-                    status
-                    tags
-                    codes(first: 10) {
-                    nodes {
-                        code
-                    }
-                    }
-                    startsAt
-                    endsAt
-                }
-                }
-            }
-            }
-        }
-    }
-    """
-
     headers = {
         "Content-Type": "application/json",
         "X-Shopify-Access-Token": ACCESS_TOKEN
     }
 
-    response = requests.post(
-        url,
-        headers=headers,
-        json={"query": query}
-    )
+    all_edges = []
+    cursor = None
 
-    data = response.json()
+    while True:
 
-    x = json.dumps(data, indent=2, ensure_ascii=False)
+        after_clause = f', after: "{cursor}"' if cursor else ""
+
+        query = f"""
+        {{
+          codeDiscountNodes(first: 250{after_clause}) {{
+            pageInfo {{
+              hasNextPage
+              endCursor
+            }}
+            edges {{
+              node {{
+                id
+                codeDiscount {{
+                  ... on DiscountCodeBasic {{
+                    title
+                    status
+                    tags
+                    codes(first: 10) {{
+                      nodes {{
+                        code
+                      }}
+                    }}
+                    startsAt
+                    endsAt
+                  }}
+
+                  ... on DiscountCodeBxgy {{
+                    title
+                    status
+                    tags
+                    codes(first: 10) {{
+                      nodes {{
+                        code
+                      }}
+                    }}
+                    startsAt
+                    endsAt
+                  }}
+
+                  ... on DiscountCodeFreeShipping {{
+                    title
+                    status
+                    tags
+                    codes(first: 10) {{
+                      nodes {{
+                        code
+                      }}
+                    }}
+                    startsAt
+                    endsAt
+                  }}
+                }}
+              }}
+            }}
+          }}
+        }}
+        """
+
+        response = requests.post(
+            url,
+            headers=headers,
+            json={"query": query}
+        )
+
+        response.raise_for_status()
+
+        data = response.json()
+
+        result = data["data"]["codeDiscountNodes"]
+
+        all_edges.extend(result["edges"])
+
+        if not result["pageInfo"]["hasNextPage"]:
+            break
+
+        cursor = result["pageInfo"]["endCursor"]
 
     all_discounts = [
         edge["node"]
-        for edge in data["data"]["codeDiscountNodes"]["edges"]
+        for edge in all_edges
         if "all" in edge["node"]["codeDiscount"].get("tags", [])
     ]
 
     return {
-        "message": "This is a sample API endpoint. Replace this with your actual data fetching logic. [" + TOKEN + " @ " + SHOP + "]",
+        "count": len(all_discounts),
         "data": all_discounts
     }
 
