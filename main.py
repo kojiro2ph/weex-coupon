@@ -108,9 +108,15 @@ def get_sample_data():
 
     x = json.dumps(data, indent=2, ensure_ascii=False)
 
+    all_discounts = [
+        edge["node"]
+        for edge in data["data"]["codeDiscountNodes"]["edges"]
+        if "all" in edge["node"]["codeDiscount"].get("tags", [])
+    ]
+
     return {
         "message": "This is a sample API endpoint. Replace this with your actual data fetching logic. [" + TOKEN + " @ " + SHOP + "]",
-        "data": x
+        "data": all_discounts
     }
 
 @app.get("/api/items/{item_id}")
