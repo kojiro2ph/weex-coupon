@@ -27,7 +27,7 @@ ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
 @app.get("/api/test98")
 def test_api():
-    print("Testing API endpoint...")
+    print("Testing API endpoint...abc")
 
     auth_url = f"https://{SHOP}/admin/oauth/access_token"
 
