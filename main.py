@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from typing import Optional, List
+from fastapi import FastAPI, Query, Request
 from fastapi.responses import HTMLResponse
 from fastapi.responses import RedirectResponse
 import requests
@@ -46,7 +47,9 @@ def test_api():
     }
 
 @app.get("/api/data")
-def get_sample_data():
+def get_sample_data(shop: Optional[str] = None, cid: Optional[str] = None):
+
+    print(f"Received request with shop: {shop}, cid: {cid}")
 
     url = f"https://{SHOP}/admin/api/2026-04/graphql.json"
 
@@ -175,7 +178,7 @@ def get_sample_data():
 
 
     # customer ---
-    customer_id = "gid://shopify/Customer/6617539969210"
+    customer_id = "gid://shopify/Customer/" + cid if cid else None
 
     matched = []
 
